@@ -1,0 +1,12 @@
+{
+  "name": "shoal-skill",
+  "version": "0.1.0",
+  "description": "Claude Code skill for the Shoal API — installs /shoal slash command",
+  "type": "module",
+  "bin": {
+    "shoal-skill": "./bin/install.js"
+  },
+  "keywords": ["shoal", "claude-code", "skill", "mcp", "crypto", "intelligence"],
+  "files": ["bin", "SKILL.md"],
+  "license": "MIT"
+}
