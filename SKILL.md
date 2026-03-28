@@ -22,7 +22,7 @@ shoal auth YOUR_API_KEY
 claude mcp add --transport stdio shoal -- shoal-mcp
 ```
 
-The MCP server exposes 18 tools (signal_top, signal_all, signal_org, signal_category, signal_history, radar_all, radar_org, radar_category, orgs_search, orgs_get, categories, brief_org, brief_batch, webhooks_list, webhooks_create, webhooks_get, webhooks_update, webhooks_delete, usage).
+The MCP server exposes 19 tools (signal_top, signal_all, signal_org, signal_category, signal_history, radar_all, radar_org, radar_category, orgs_search, orgs_get, search, categories, brief_org, brief_batch, webhooks_list, webhooks_create, webhooks_get, webhooks_update, webhooks_delete, usage).
 
 ### REST API
 
@@ -132,6 +132,7 @@ Signal events require >= 2 posts and include a quantified signal score.
 
 ```bash
 shoal auth <key>                  # Save API key
+shoal search "query" -l 10 -s 7d # Search across all events
 shoal signal top -l 10            # Top signals
 shoal signal all -s 2h            # Signals from last 2 hours
 shoal signal org <id> -s 1d       # Signals for org, last day
