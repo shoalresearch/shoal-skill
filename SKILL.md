@@ -173,6 +173,62 @@ The `-s/--since` flag accepts ISO timestamps or shorthand: `30m`, `2h`, `1d`, `7
 ### "Compare activity across orgs"
 1. `brief_batch` with comma-separated IDs (max 25) and `compact=true` to reduce payload
 
+### "Find ALL events about a topic" (exhaustive search)
+
+Search returns max 20 results per query and matches on keywords, so a single query WILL miss events. You MUST fan out aggressively. A lazy single-query search is unacceptable when the user asks for "all" or "every" event.
+
+**Step 1: Fan out with 10-20 parallel searches using synonyms and related terms.**
+
+Every concept has multiple phrasings. Run ALL of them in parallel:
+
+| Topic | Search queries to run (ALL of these, not just one) |
+|-------|---------------------------------------------------|
+| MCP | `"MCP"`, `"MCP server"`, `"MCP integration"`, `"MCP launch"`, `"Model Context Protocol"`, `"MCP tools"`, `"MCP agent"` |
+| CLI | `"CLI"`, `"CLI launch"`, `"command line"`, `"open-source CLI"`, `"developer CLI"`, `"terminal tool"` |
+| Skills | `"skills"`, `"AI skills"`, `"agent skills"`, `"skills launch"`, `"skills hub"`, `"Claude skill"`, `"skill integration"` |
+| AI agents | `"AI agent"`, `"agent framework"`, `"autonomous agent"`, `"agent kit"`, `"agentic"`, `"agent launch"`, `"agent platform"` |
+| Wallets | `"wallet"`, `"wallet launch"`, `"agent wallet"`, `"wallet standard"`, `"wallet kit"` |
+| Payments | `"payment"`, `"micropayment"`, `"x402"`, `"pay per request"`, `"agent payment"`, `"agent commerce"` |
+
+**Step 2: Category sweep for anything the text search missed.**
+
+Search only matches keywords. Category endpoints return ALL events of that type. For launch/tool queries:
+```bash
+shoal radar category product_development -s 30d -l 50
+shoal signal category product_development -s 30d -l 50
+```
+Page through with cursors if there are more. Filter the results locally for your keywords.
+
+**Step 3: Deduplicate by event `id`.** Multiple queries WILL return overlapping results. Collect everything, deduplicate, then filter.
+
+**Step 4: Present results grouped by topic in separate tables, sorted by date descending.**
+
+Format:
+```
+MCP Launches
+| Date   | Company              | Event                                            |
+|--------|----------------------|--------------------------------------------------|
+| Mar 27 | Pendle               | Launches Pendle Skills and MCP for AI agents      |
+| Mar 26 | DefiLlama            | Launches MCP for AI agents with 23 tools          |
+...
+
+CLI Launches
+| Date   | Company              | Event                                            |
+...
+
+Skills Launches
+| Date   | Company              | Event                                            |
+...
+```
+
+**Rules:**
+- When the user says "all" or "every", you MUST run at least 10 parallel searches. No shortcuts.
+- Always include a category sweep as a safety net.
+- If a single search returns 20 results (the max), there are likely more — add more query variants.
+- Group results by the user's requested categories, not by API response.
+- Include ALL matching events, even tangential ones. Let the user decide what's relevant.
+- Show company/org name from `eventOwner`, not from participants.
+
 ## Gotchas
 
 - `/radar/all` and `/signal/all` REQUIRE `since` parameter. Other filtered endpoints make it optional.
