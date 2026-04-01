@@ -1,6 +1,6 @@
 {
   "name": "shoal-skill",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Claude Code skill for the Shoal API — installs /shoal slash command",
   "type": "module",
   "bin": {
