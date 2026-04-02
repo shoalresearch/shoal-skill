@@ -1,0 +1,30 @@
+{
+  "name": "shoal",
+  "version": "0.1.0",
+  "description": "Hosted Shoal MCP connector and skill for Claude Code",
+  "author": {
+    "name": "Shoal Research",
+    "url": "https://shoal.xyz"
+  },
+  "homepage": "https://docs.shoal.xyz/integrations/mcp",
+  "repository": "https://github.com/shoalresearch/shoal-skill",
+  "license": "MIT",
+  "keywords": ["shoal", "mcp", "crypto", "intelligence", "claude-code"],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Shoal",
+    "shortDescription": "Crypto intelligence tools powered by Shoal MCP",
+    "longDescription": "Adds the hosted Shoal MCP connector and a Shoal skill to Claude Code so you can search signals, monitor organizations, and use Shoal through app-based OAuth.",
+    "developerName": "Shoal Research",
+    "category": "Research",
+    "capabilities": ["Interactive", "Read"],
+    "websiteURL": "https://docs.shoal.xyz/integrations/mcp",
+    "defaultPrompt": [
+      "Search Shoal for recent Arbitrum signals.",
+      "Give me a brief on Ethereum Foundation.",
+      "Show my Shoal usage and remaining budget."
+    ],
+    "brandColor": "#FF6B35"
+  }
+}

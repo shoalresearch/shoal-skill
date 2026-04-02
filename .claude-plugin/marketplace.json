@@ -1,0 +1,19 @@
+{
+  "name": "shoalresearch-tools",
+  "owner": {
+    "name": "Shoal Research"
+  },
+  "plugins": [
+    {
+      "name": "shoal",
+      "source": "./plugins/shoal",
+      "description": "Hosted Shoal MCP connector and skill for Claude Code",
+      "version": "0.1.0",
+      "author": {
+        "name": "Shoal Research"
+      },
+      "homepage": "https://docs.shoal.xyz/integrations/mcp",
+      "category": "Research"
+    }
+  ]
+}

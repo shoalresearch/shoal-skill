@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "shoal": {
+      "type": "http",
+      "url": "https://api.shoal.xyz/mcp",
+      "note": "Hosted Shoal MCP server. Uses Shoal app OAuth and requires an account with a valid API key and remaining quota."
+    }
+  }
+}

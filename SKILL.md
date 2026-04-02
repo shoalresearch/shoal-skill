@@ -87,25 +87,32 @@ curl -s -H "Authorization: Bearer $SHOAL_API_KEY" \
 
 ## MCP tool reference
 
-Current remote Shoal MCP tools:
+The hosted Shoal MCP tool list depends on the authenticated account's plan.
+
+Core tools commonly available:
 
 ```text
 shoal_search
 shoal_get_top_signal_events
-shoal_get_all_signal_events
 shoal_get_signal_by_organization_id
 shoal_get_signal_by_category
-shoal_get_all_radar_events
 shoal_get_radar_by_organization_id
 shoal_get_radar_by_category
-shoal_get_all_organizations
 shoal_get_organization_by_id
 shoal_get_organization_by_name
 shoal_get_organization_signal_history
-shoal_get_brief
-shoal_get_brief_batch
 shoal_get_categories
 shoal_get_usage_stats
+```
+
+Higher-tier accounts may also see:
+
+```text
+shoal_get_brief
+shoal_get_brief_batch
+shoal_get_all_signal_events
+shoal_get_all_radar_events
+shoal_get_all_organizations
 shoal_list_webhooks
 shoal_create_webhook
 shoal_get_webhook
@@ -131,6 +138,8 @@ GET /v1/organizations/byOrganizationName?name=Ethereum
 GET /v1/organizations/:id/signal-history?days=30
 ```
 
+Treat `/v1/organizations/all` as a bulk directory surface. Prefer the name or ID lookup endpoints unless the user explicitly needs bulk access and their plan allows it.
+
 ### Signal (high-conviction scored events)
 
 ```
@@ -140,6 +149,8 @@ GET /v1/signal/byOrganizationId?id=526&since=...
 GET /v1/signal/byCategory?category=partnership&since=...
 ```
 
+Treat `/v1/signal/all` as a bulk feed surface. Prefer top or filtered signal endpoints unless the user explicitly needs the full feed and their plan allows it.
+
 ### Radar (broader market activity)
 
 ```
@@ -147,6 +158,8 @@ GET /v1/radar/all?since=2026-03-01T00:00:00Z         # since REQUIRED
 GET /v1/radar/byOrganizationId?id=526&since=...
 GET /v1/radar/byCategory?category=security_incident&since=...
 ```
+
+Treat `/v1/radar/all` as a bulk feed surface. Prefer filtered radar endpoints unless the user explicitly needs the full feed and their plan allows it.
 
 ### Search
 
@@ -165,6 +178,8 @@ GET /v1/brief/batch?ids=526,100,200&since=...&limit=5&compact=true   # max 25 ID
 
 Equivalent MCP tools: `shoal_get_brief`, `shoal_get_brief_batch`
 
+Brief endpoints may be unavailable on lower-tier plans.
+
 ### Webhooks
 
 ```
@@ -177,10 +192,12 @@ DELETE /v1/webhooks/:id
 
 Max 5 webhooks per key. Secret returned only at creation. Deliveries signed with HMAC-SHA256 (`X-Shoal-Signature: sha256=<hex>`). Must respond 2xx within 10s. Retries: 15s, 1m, 5m, 30m (5 attempts). Auto-disabled after 50 consecutive failures.
 
+Webhook management may be unavailable on lower-tier plans.
+
 ### Usage
 
 ```
-GET /v1/usage   # returns { today, thisWeek, thisMonth }
+GET /v1/usage   # returns { today, thisWeek, thisMonth, budget }
 ```
 
 Equivalent MCP tool: `shoal_get_usage_stats`
