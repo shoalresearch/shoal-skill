@@ -19,8 +19,8 @@ try {
   console.log(`
   Shoal skill installed.
 
-  You can now use /shoal in Claude Code to get full API,
-  CLI, and MCP guidance for the Shoal intelligence API.
+  You can now use /shoal in Claude Code for entity-first
+  Shoal MCP, API, and CLI guidance.
 
   Docs: https://docs.shoal.xyz
 `);

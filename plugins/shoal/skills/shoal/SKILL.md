@@ -1,8 +1,8 @@
 ---
 name: shoal
-description: Use the hosted Shoal MCP connector in Claude Code to search crypto intelligence, monitor organizations, and review usage.
+description: Use the hosted Shoal MCP connector to resolve canonical crypto entities, inspect relationships, and traverse intelligence timelines.
 metadata:
-  tags: shoal, mcp, crypto, intelligence, signal, radar
+  tags: shoal, mcp, crypto, intelligence, entities, signal, radar
   userInvocable: true
 ---
 
@@ -10,58 +10,56 @@ metadata:
 
 1. If Shoal MCP tools are available, use them first.
 2. Prefer the hosted Shoal MCP server at `https://api.shoal.xyz/mcp`.
-3. Only fall back to raw REST examples when the user explicitly asks for HTTP or the connector is unavailable.
+3. Only fall back to raw REST or local CLI examples when the user explicitly asks for them.
 
-Do not ask the user to paste a raw API key into Claude Code for hosted MCP auth. Shoal uses app-based OAuth through `app.shoal.xyz`.
+Do not ask the user to paste a raw API key into Claude Code for hosted MCP auth. Hosted Shoal MCP uses app-based OAuth through `app.shoal.xyz`.
 
 ## Authentication
 
-Shoal MCP for Claude Code uses the hosted server:
+Hosted Shoal MCP flow:
 
-```text
-https://api.shoal.xyz/mcp
-```
+1. Connect `https://api.shoal.xyz/mcp`
+2. Complete OAuth through `app.shoal.xyz`
+3. Shoal verifies the account has a valid API key with remaining quota
+4. MCP access is granted without exposing the raw key to the client
 
-The user is redirected to `app.shoal.xyz`, signs in, and approves access. The account must already have a valid API key with remaining quota.
+## Current workflow model
 
-## Tool availability
+Shoal is entity-first.
 
-The exact Shoal tool set depends on the authenticated account's plan.
+For most requests:
 
-Common tools include:
+1. resolve a canonical entity
+2. inspect relationships or references
+3. fetch timeline, signal, radar, media, or research for that entity
+4. use organization routes only for compatibility
 
-```text
-shoal_search
-shoal_get_top_signal_events
-shoal_get_signal_by_organization_id
-shoal_get_signal_by_category
-shoal_get_radar_by_organization_id
-shoal_get_radar_by_category
-shoal_get_organization_by_id
-shoal_get_organization_by_name
-shoal_get_organization_signal_history
-shoal_get_categories
-shoal_get_usage_stats
-```
+## Tool guidance
 
-Higher-tier accounts may also see:
+Exact tool names vary between the hosted Shoal MCP and local stdio Shoal MCP setups, but current tool families include:
 
-```text
-shoal_get_brief
-shoal_get_brief_batch
-shoal_get_all_signal_events
-shoal_get_all_radar_events
-shoal_get_all_organizations
-shoal_list_webhooks
-shoal_create_webhook
-shoal_get_webhook
-shoal_update_webhook
-shoal_delete_webhook
-```
+- entity resolution and entity lookup
+- entity relationships and references
+- entity timeline
+- signal and radar feeds
+- briefs
+- categories and usage
+- webhook management
+- on some setups, entity media, entity research, and export jobs
 
-## Usage guidance
+When the hosted tools are available:
 
-- Prefer filtered and summary-oriented Shoal tools over bulk feeds unless the user explicitly needs bulk access.
-- Treat `all/*` and webhook workflows as higher-tier surfaces.
-- `shoal_get_usage_stats` returns request counts plus monthly budget information.
-- For detailed setup or REST examples, see `https://docs.shoal.xyz/integrations/mcp`.
+- prefer canonical entity workflows over organization-first workflows
+- prefer scoped timeline and entity traversal over bulk feed polling
+- prefer filtered surfaces over `all/*` routes unless the user explicitly needs bulk access
+
+## Use-case focus
+
+Use Shoal MCP for:
+
+- resolving fuzzy names like `Ethereum Foundation`, `ETH Treasury`, or `Mantle`
+- finding what entity a user actually means
+- traversing who is related to an entity
+- pulling recent high-signal or timeline data for one entity
+- reviewing entity-linked media or research content
+- managing webhooks and usage when the user is operating an integration
