@@ -1,7 +1,7 @@
 {
   "name": "shoal-skill",
-  "version": "0.1.4",
-  "description": "Claude Code skill for Shoal's entity-first MCP and API workflows",
+  "version": "0.1.5",
+  "description": "Codex and Claude Code skill for Shoal's entity-first MCP and API workflows",
   "type": "module",
   "bin": {
     "shoal-skill": "./bin/install.js"

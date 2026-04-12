@@ -1,8 +1,8 @@
-# Shoal Skill and Claude Code Plugin
+# Shoal Skill and Claude/Codex Setup
 
-This repo provides two Shoal integrations for Claude Code:
+This repo provides Shoal skill guidance for Claude Code and Codex, plus the hosted MCP/plugin path for Claude Code.
 
-- `shoal-skill` npm package, which installs the Shoal skill into your local Claude Code skills directory
+- `shoal-skill` npm package, which installs the Shoal skill into both your local Claude Code and Codex skills directories
 - `shoal` Claude Code plugin, which points Claude Code at Shoal's hosted MCP server and bundles the same skill guidance
 
 Skills are not MCP tools. The skill tells Claude Code how to use the available Shoal MCP tools correctly.
@@ -63,6 +63,22 @@ Or:
 npm install -g shoal-skill
 shoal-skill
 ```
+
+## Recommended local setup with the CLI
+
+If you want the local stdio MCP path, use:
+
+```bash
+npm install -g shoal-cli
+shoal auth YOUR_API_KEY
+shoal setup
+```
+
+That setup command:
+
+- registers `shoal-mcp` in Codex
+- registers `shoal-mcp` in Claude Code
+- installs the Shoal skill into both clients
 
 ## Current use cases the skill is optimized for
 

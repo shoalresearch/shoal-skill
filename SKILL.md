@@ -71,14 +71,14 @@ Important:
 ```bash
 npm install -g shoal-cli
 shoal auth YOUR_API_KEY
-shoal entity search Ethereum
-shoal timeline entity 23151 --since 7d
+shoal setup
+shoal latest --window 24h
 ```
 
 ### Local stdio MCP
 
 ```bash
-claude mcp add --transport stdio shoal -- shoal-mcp
+shoal setup
 ```
 
 Use local key-based setup only when the hosted MCP route is unavailable or the user explicitly wants a local API-key workflow.
